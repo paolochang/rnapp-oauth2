@@ -1,10 +1,14 @@
 import express from "express";
+import { initializePassport } from "./middleware/passport";
+import authRouter from "./routers/auth.js";
 
 const PORT = 5000;
 const app = express();
 
-app.get("/api", (req, res) => res.json({ message: "hello" }));
+initializePassport(app);
 
-app.listen(PORT, () =>
-  console.log(`Server is running on http://localhost:${PORT}`)
-);
+app.use("/auth", authRouter);
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
