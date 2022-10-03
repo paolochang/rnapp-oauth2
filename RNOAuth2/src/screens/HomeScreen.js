@@ -2,8 +2,8 @@ import {SafeAreaView, Text} from 'react-native';
 import React from 'react';
 
 const HomeScreen = ({route}) => {
-  const {id} = route.params;
-
+  const params = route.params || {};
+  const {id} = params;
   return (
     <SafeAreaView>
       <Text>HomeScreen</Text>

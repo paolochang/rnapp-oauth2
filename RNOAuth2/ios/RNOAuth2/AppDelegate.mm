@@ -130,7 +130,6 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 
 #endif
 
-// Add this inside `@implementation AppDelegate` above `@end`:
 - (BOOL)application:(UIApplication *)application
    openURL:(NSURL *)url
    options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
@@ -139,4 +138,3 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 }
 
 @end
-

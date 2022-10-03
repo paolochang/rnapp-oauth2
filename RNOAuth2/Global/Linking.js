@@ -4,9 +4,6 @@ const config = {
       screens: {
         Home: {
           path: 'home/:id',
-          parse: {
-            user: id => `${id}`,
-          },
         },
         Settings: {
           path: 'settings',
@@ -17,6 +14,9 @@ const config = {
       screens: {
         LogIn: {
           path: 'login',
+        },
+        SignUp: {
+          path: 'signup',
         },
       },
     },

@@ -7,9 +7,7 @@ const Drawer = createDrawerNavigator();
 
 const AppStack = () => {
   return (
-    <Drawer.Navigator
-      useLegacyImplementation={false}
-      screenOptions={{headerShown: false}}>
+    <Drawer.Navigator>
       <Drawer.Screen name="Home" component={HomeScreen} />
       <Drawer.Screen name="Settings" component={SettingsScreen} />
     </Drawer.Navigator>
