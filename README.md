@@ -13,3 +13,4 @@ In this tutorial I will build the following:
 ## Reference
 
 - [Logging Into React Native Apps with Facebook or Google](https://rationalappdev.com/logging-into-react-native-apps-with-facebook-or-google/)
+- [How To Handle Deep Linking in a React Native App](https://blog.jscrambler.com/how-to-handle-deep-linking-in-a-react-native-app)

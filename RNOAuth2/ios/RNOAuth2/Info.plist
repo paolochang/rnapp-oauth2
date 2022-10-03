@@ -26,7 +26,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>RNOAuth2</string>
+			<string>rnoauth2</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>rnoauth2</string>
