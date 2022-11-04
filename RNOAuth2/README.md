@@ -21,14 +21,17 @@ $ npx uri-scheme open "rnoauth2://home/123" --ios
 ## Full Clean of a React Native Project
 
 ```bash
-$ watchman watch-del-all
-$ rm -rf yarn.lock package-lock.json node_modules
-$ rm -rf android/app/build
-$ rm -rf ios/Pods && rm ios/Podfile.lock
-$ rm -rf ~/Library/Developer/Xcode/DerivedData
-$ npm install --legacy-peer-deps && cd ios && pod update && cd ..
+$ watchman watch-del-all &&
+$ rm -rf yarn.lock package-lock.json node_modules &&
+$ rm -rf android/app/build &&
+$ rm -rf ios/Pods && rm ios/Podfile.lock &&
+$ sudo rm -rf ~/Library/Developer/Xcode/DerivedData
+$ npm install --legacy-peer-deps && npx pod-install
 $ cd android && ./gradlew clean && cd ..
 $ npm start -- --reset-cache
+$ npx react-native start -- --reset-cache
+$ npx react-native run-ios -- --reset-cache
+$ npx react-native run-android -- --reset-cache
 ```
 
 ## Troubleshoot
