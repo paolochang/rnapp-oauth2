@@ -8,20 +8,6 @@ Make sure emulator is running
 $ adb devices
 ```
 
-## Launch and Test Mobile Client
-
-```sh
-$ cd RNOAuth2v1
-$ npm install
-$ npx react-native start
-$ # Test with android simulator
-$ npx uri-scheme open rnoauth2v1://home/1 --android
-$ npx uri-scheme open rnoauth2v1://settings/1 --android
-$ # Test with ios simulator
-$ npx uri-scheme open rnoauth2v1://home/1 --ios
-$ npx uri-scheme open rnoauth2v1://settings/1 --ios
-```
-
 ## Full Clean of a React Native Project
 
 ```sh
@@ -38,16 +24,46 @@ $ npx react-native run-ios -- --reset-cache
 $ npx react-native run-android -- --reset-cache
 ```
 
+## Launch and Test Mobile Client
+
+```sh
+$ cd RNOAuth2v1
+$ npm install
+$ npx react-native start
+$ # Test with android simulator
+$ npx uri-scheme open rnoauth2v1://home/1 --android
+$ npx uri-scheme open rnoauth2v1://settings/1 --android
+$ # Test with ios simulator
+$ npx uri-scheme open rnoauth2v1://home/1 --ios
+$ npx uri-scheme open rnoauth2v1://settings/1 --ios
+```
+
 ## Troubleshoot
 
-### Invariant Violation: Failed to call into JavaScript module method AppRegistry.runApplication()
+### Error: Failed to initialize react-native-reanimated library
 
-> ERROR Error: Requiring unknown module "undefined". If you are sure the module exists, try restarting Metro. You may also want to run `yarn` or `npm install`., js engine: hermes
-> ERROR Invariant Violation: Failed to call into JavaScript module method AppRegistry.runApplication(). Module has not been registered as callable. Registered callable JavaScript modules (n = 10): Systrace, JSTimers, HeapCapture, SamplingProfiler, RCTLog, RCTDeviceEventEmitter, RCTNativeAppEventEmitter, GlobalPerformanceLogger, JSDevSupportModule, HMRClient.
-> A frequent cause of the error is that the application entry file path is incorrect. This can also happen when the JS bundle is corrupt or there is an early initialization error when loading React Native., js engine: hermes
+> Error: Failed to initialize react-native-reanimated library, make sure you followed installation steps here: https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/installation/
+>
+> 1. Make sure reanimated's babel plugin is installed in your babel.config.js (you should have 'react-native-reanimated/plugin' listed there - also see the above link for details)
+> 2. Make sure you reset build cache after updating the config, run: yarn start --reset-cache, js engine: hermes
+>    ERROR Invariant Violation: Failed to call into JavaScript module method AppRegistry.runApplication(). Module has not been registered as callable. Registered callable JavaScript modules (n = 10): Systrace, JSTimers, HeapCapture, SamplingProfiler, RCTLog, RCTDeviceEventEmitter, RCTNativeAppEventEmitter, GlobalPerformanceLogger, JSDevSupportModule, HMRClient.
+>    A frequent cause of the error is that the application entry file path is incorrect. This can also happen when the JS bundle is corrupt or there is an early initialization error when loading React Native., js engine: hermes
+>    ERROR Invariant Violation: Failed to call into JavaScript module method AppRegistry.runApplication(). Module has not been registered as callable. Registered callable JavaScript modules (n = 10): Systrace, JSTimers, HeapCapture, SamplingProfiler, RCTLog, RCTDeviceEventEmitter, RCTNativeAppEventEmitter, GlobalPerformanceLogger, JSDevSupportModule, HMRClient.
+>    A frequent cause of the error is that the application entry file path is incorrect. This can also happen when the JS bundle is corrupt or there is an early initialization error when loading React Native., js engine: hermes
 
-1. downgrade `react-native-gesture-handler` from `^2.7.0` to `^2.6.1`
-2. clean and rebuild the project
+- Add Reanimated's Babel plugin to your babel.config.js:
+
+  ```js
+  module.exports = {
+      presets: [
+        ...
+      ],
+      plugins: [
+        ...
+        'react-native-reanimated/plugin',
+      ],
+    };
+  ```
 
 ### CLANG_CXX_LANGUAGE_STANDARD has different values
 
