@@ -38,6 +38,70 @@ $ npx uri-scheme open rnoauth2v1://home/1 --ios
 $ npx uri-scheme open rnoauth2v1://settings/1 --ios
 ```
 
+### Phase 2: Nested Navigators
+
+- Stack.Navigator
+  - Profile (Screen)
+  - Settings (Screen)
+  - Home (Drawer.Navigator)
+    - Feed (Screen)
+    - Messages (Screen)
+
+> ```
+> <pre>
+> Stack
+> ├── Drawer (Home)
+> │   ├── Feed
+> │   └── Setting
+> ├── LogIn
+> └── SignUp
+> </pre>
+> ```
+
+```js
+export const rootLinking = {
+  prefixes: ['rnoauth2v1://'],
+  config: {
+    initialRouteName: 'SignUp',
+    screens: {
+      LogIn: {
+        path: 'login',
+      },
+      SignUp: {
+        path: 'signup',
+      },
+      Home: {
+        path: '',
+        screens: {
+          Feed: {
+            path: 'feed',
+          },
+          Settings: {
+            path: 'settings',
+          },
+        },
+      },
+    },
+  },
+};
+```
+
+```sh
+$ cd RNOAuth2v1
+$ npm install
+$ npx react-native start
+$ # Test with android simulator
+$ npx uri-scheme open rnoauth2v1://login --android
+$ npx uri-scheme open rnoauth2v1://signup --android
+$ npx uri-scheme open rnoauth2v1://feed --android
+$ npx uri-scheme open rnoauth2v1://settings --android
+$ # Test with ios simulator
+$ npx uri-scheme open rnoauth2v1://login --ios
+$ npx uri-scheme open rnoauth2v1://signup --ios
+$ npx uri-scheme open rnoauth2v1://feed --ios
+$ npx uri-scheme open rnoauth2v1://settings --ios
+```
+
 ## Troubleshoot
 
 ### Error: Failed to initialize react-native-reanimated library
@@ -64,6 +128,18 @@ $ npx uri-scheme open rnoauth2v1://settings/1 --ios
       ],
     };
   ```
+
+  Then run `yarn start --reset-cache`
+
+### Error: Requiring unknown module "undefined"
+
+> ERROR Error: Requiring unknown module "undefined". If you are sure the module exists, try restarting Metro. You may also want to run `yarn` or `npm install`., js engine: hermes
+> ERROR Invariant Violation: Failed to call into JavaScript module method AppRegistry.runApplication(). Module has not been registered as callable. Registered callable JavaScript modules (n = 10): Systrace, JSTimers, HeapCapture, SamplingProfiler, RCTLog, RCTDeviceEventEmitter, RCTNativeAppEventEmitter, GlobalPerformanceLogger, JSDevSupportModule, HMRClient.
+> A frequent cause of the error is that the application entry file path is incorrect. This can also happen when the JS bundle is corrupt or there is an early initialization error when loading React Native., js engine: hermes
+> ERROR Invariant Violation: Failed to call into JavaScript module method AppRegistry.runApplication(). Module has not been registered as callable. Registered callable JavaScript modules (n = 10): Systrace, JSTimers, HeapCapture, SamplingProfiler, RCTLog, RCTDeviceEventEmitter, RCTNativeAppEventEmitter, GlobalPerformanceLogger, JSDevSupportModule, HMRClient.
+> A frequent cause of the error is that the application entry file path is incorrect. This can also happen when the JS bundle is corrupt or there is an early initialization error when loading React Native., js engine: hermes
+
+Run `yarn` or `npm install`
 
 ### CLANG_CXX_LANGUAGE_STANDARD has different values
 
@@ -99,3 +175,7 @@ const AppStack = () => {
 ```bash
 $ npx react-native start --reset-cache
 ```
+
+## Reference
+
+- [Nesting navigators](https://reactnavigation.org/docs/nesting-navigators/)

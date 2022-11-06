@@ -1,13 +1,24 @@
 export const linking = {
   prefixes: ['rnoauth2v1://'],
   config: {
-    initialRouteName: 'Home',
+    initialRouteName: 'SignUp',
     screens: {
-      Home: {
-        path: 'home/:homeId',
+      LogIn: {
+        path: 'login',
       },
-      Settings: {
-        path: 'settings/:settingsId',
+      SignUp: {
+        path: 'signup',
+      },
+      Home: {
+        path: '',
+        screens: {
+          Feed: {
+            path: 'feed',
+          },
+          Settings: {
+            path: 'settings',
+          },
+        },
       },
     },
   },

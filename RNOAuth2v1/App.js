@@ -1,8 +1,8 @@
 import React from 'react';
-import AppStacks from './src/navigations/AppStack';
+import AppNav from './src/navigations/AppNav';
 
 const App = () => {
-  return <AppStacks />;
+  return <AppNav />;
 };
 
 export default App;
