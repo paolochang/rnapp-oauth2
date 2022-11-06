@@ -1,7 +1,7 @@
 export const linking = {
   prefixes: ['rnoauth2v1://'],
   config: {
-    initialRouteName: 'SignUp',
+    initialRouteName: 'LogIn',
     screens: {
       LogIn: {
         path: 'login',
