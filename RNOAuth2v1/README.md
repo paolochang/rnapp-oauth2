@@ -40,14 +40,16 @@ $ npx uri-scheme open rnoauth2v1://settings/1 --ios
 
 ### Phase 2: Nested Navigators
 
-> <pre>
-> Stack.Navigator (Root)
-> ├── Drawer.Navigator (Home)
-> │   ├── Feed
-> │   └── Setting
-> ├── LogIn
-> └── SignUp
-> </pre>
+The structure of the nested navigators looks like:
+
+<pre>
+Stack.Navigator (Root)
+├── Drawer.Navigator (Home)
+│   ├── Feed
+│   └── Setting
+├── LogIn
+└── SignUp
+</pre>
 
 ```js
 export const rootLinking = {
