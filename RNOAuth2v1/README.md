@@ -38,20 +38,79 @@ $ npx uri-scheme open rnoauth2v1://home/1 --ios
 $ npx uri-scheme open rnoauth2v1://settings/1 --ios
 ```
 
+### Phase 2: Nested Navigators
+
+The structure of the nested navigators looks like:
+
+<pre>
+Stack.Navigator (Root)
+├── Drawer.Navigator (Home)
+│   ├── Feed
+│   └── Setting
+├── LogIn
+└── SignUp
+</pre>
+
+```js
+export const rootLinking = {
+  prefixes: ['rnoauth2v1://'],
+  config: {
+    initialRouteName: 'SignUp',
+    screens: {
+      LogIn: {
+        path: 'login',
+      },
+      SignUp: {
+        path: 'signup',
+      },
+      Home: {
+        path: '',
+        screens: {
+          Feed: {
+            path: 'feed',
+          },
+          Settings: {
+            path: 'settings',
+          },
+        },
+      },
+    },
+  },
+};
+```
+
+```sh
+$ cd RNOAuth2v1
+$ npm install
+$ npx react-native start
+$ # Test with android simulator
+$ npx uri-scheme open rnoauth2v1://login --android
+$ npx uri-scheme open rnoauth2v1://signup --android
+$ npx uri-scheme open rnoauth2v1://feed --android
+$ npx uri-scheme open rnoauth2v1://settings --android
+$ # Test with ios simulator
+$ npx uri-scheme open rnoauth2v1://login --ios
+$ npx uri-scheme open rnoauth2v1://signup --ios
+$ npx uri-scheme open rnoauth2v1://feed --ios
+$ npx uri-scheme open rnoauth2v1://settings --ios
+```
+
 ## Troubleshoot
 
 ### Error: Failed to initialize react-native-reanimated library
 
-> Error: Failed to initialize react-native-reanimated library, make sure you followed installation steps here: https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/installation/
->
-> 1. Make sure reanimated's babel plugin is installed in your babel.config.js (you should have 'react-native-reanimated/plugin' listed there - also see the above link for details)
-> 2. Make sure you reset build cache after updating the config, run: yarn start --reset-cache, js engine: hermes
->    ERROR Invariant Violation: Failed to call into JavaScript module method AppRegistry.runApplication(). Module has not been registered as callable. Registered callable JavaScript modules (n = 10): Systrace, JSTimers, HeapCapture, SamplingProfiler, RCTLog, RCTDeviceEventEmitter, RCTNativeAppEventEmitter, GlobalPerformanceLogger, JSDevSupportModule, HMRClient.
->    A frequent cause of the error is that the application entry file path is incorrect. This can also happen when the JS bundle is corrupt or there is an early initialization error when loading React Native., js engine: hermes
->    ERROR Invariant Violation: Failed to call into JavaScript module method AppRegistry.runApplication(). Module has not been registered as callable. Registered callable JavaScript modules (n = 10): Systrace, JSTimers, HeapCapture, SamplingProfiler, RCTLog, RCTDeviceEventEmitter, RCTNativeAppEventEmitter, GlobalPerformanceLogger, JSDevSupportModule, HMRClient.
->    A frequent cause of the error is that the application entry file path is incorrect. This can also happen when the JS bundle is corrupt or there is an early initialization error when loading React Native., js engine: hermes
+- Error message:
 
-- Add Reanimated's Babel plugin to your babel.config.js:
+  > Error: Failed to initialize react-native-reanimated library, make sure you followed installation steps here: https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/installation/
+  >
+  > 1. Make sure reanimated's babel plugin is installed in your babel.config.js (you should have 'react-native-reanimated/plugin' listed there - also see the above link for details)
+  > 2. Make sure you reset build cache after updating the config, run: yarn start --reset-cache, js engine: hermes
+  >    ERROR Invariant Violation: Failed to call into JavaScript module method AppRegistry.runApplication(). Module has not been registered as callable. Registered callable JavaScript modules (n = 10): Systrace, JSTimers, HeapCapture, SamplingProfiler, RCTLog, RCTDeviceEventEmitter, RCTNativeAppEventEmitter, GlobalPerformanceLogger, JSDevSupportModule, HMRClient.
+  >    A frequent cause of the error is that the application entry file path is incorrect. This can also happen when the JS bundle is corrupt or there is an early initialization error when loading React Native., js engine: hermes
+  >    ERROR Invariant Violation: Failed to call into JavaScript module method AppRegistry.runApplication(). Module has not been registered as callable. Registered callable JavaScript modules (n = 10): Systrace, JSTimers, HeapCapture, SamplingProfiler, RCTLog, RCTDeviceEventEmitter, RCTNativeAppEventEmitter, GlobalPerformanceLogger, JSDevSupportModule, HMRClient.
+  >    A frequent cause of the error is that the application entry file path is incorrect. This can also happen when the JS bundle is corrupt or there is an early initialization error when loading React Native., js engine: hermes
+
+  Add Reanimated's Babel plugin to your `babel.config.js`:
 
   ```js
   module.exports = {
@@ -65,21 +124,37 @@ $ npx uri-scheme open rnoauth2v1://settings/1 --ios
     };
   ```
 
+  Then run `yarn start --reset-cache`
+
+### Error: Requiring unknown module "undefined"
+
+- Error message:
+
+  > ERROR Error: Requiring unknown module "undefined". If you are sure the module exists, try restarting Metro. You may also want to run `yarn` or `npm install`., js engine: hermes
+  > ERROR Invariant Violation: Failed to call into JavaScript module method AppRegistry.runApplication(). Module has not been registered as callable. Registered callable JavaScript modules (n = 10): Systrace, JSTimers, HeapCapture, SamplingProfiler, RCTLog, RCTDeviceEventEmitter, RCTNativeAppEventEmitter, GlobalPerformanceLogger, JSDevSupportModule, HMRClient.
+  > A frequent cause of the error is that the application entry file path is incorrect. This can also happen when the JS bundle is corrupt or there is an early initialization error when loading React Native., js engine: hermes
+  > ERROR Invariant Violation: Failed to call into JavaScript module method AppRegistry.runApplication(). Module has not been registered as callable. Registered callable JavaScript modules (n = 10): Systrace, JSTimers, HeapCapture, SamplingProfiler, RCTLog, RCTDeviceEventEmitter, RCTNativeAppEventEmitter, GlobalPerformanceLogger, JSDevSupportModule, HMRClient.
+  > A frequent cause of the error is that the application entry file path is incorrect. This can also happen when the JS bundle is corrupt or there is an early initialization error when loading React Native., js engine: hermes
+
+  Run `yarn` or `npm install`
+
 ### CLANG_CXX_LANGUAGE_STANDARD has different values
 
-> [!] Can't merge user_target_xcconfig for pod targets: ["RNReanimated", "hermes-engine"]. Singular build setting CLANG_CXX_LANGUAGE_STANDARD has different values.
+- Error message:
 
-react-native-reanimated version 3 uses c++17
+  > [!] Can't merge user_target_xcconfig for pod targets: ["RNReanimated", "hermes-engine"]. Singular build setting CLANG_CXX_LANGUAGE_STANDARD has different values.
 
-just run `yarn add react-native-reanimated@last` and select `version 3.0.0-rc.2`
+  react-native-reanimated version 3 uses c++17
 
-Just set the CXX n the podspec.
+  just run `yarn add react-native-reanimated@last` and select `version 3.0.0-rc.2`
 
-`node_modules/react-native-reanimated/RNReanimated.podspec`
+  Just set the CXX n the podspec.
 
-Change to:
+  `node_modules/react-native-reanimated/RNReanimated.podspec`
 
-`"CLANG_CXX_LANGUAGE_STANDARD" => "c++17",`
+  Change to:
+
+  `"CLANG_CXX_LANGUAGE_STANDARD" => "c++17",`
 
 ### Tried to synchronously call anonymous function {create} from a different thread
 
@@ -99,3 +174,7 @@ const AppStack = () => {
 ```bash
 $ npx react-native start --reset-cache
 ```
+
+## Reference
+
+- [Nesting navigators](https://reactnavigation.org/docs/nesting-navigators/)
